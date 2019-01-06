@@ -1,6 +1,6 @@
 # linux-performance-monitor
-Continuously monitor the CPU and memory usage of the specified process in the Linux system.
-According to the need, you can save the monitoring results to the excel table, or MySQL database
+Continuously monitor the CPU and memory usage of the specified PID in the Linux system.
+According to your need, you can save the monitoring results to the excel table, or MySQL database
 
 ## Usage
 1. clone linux-performance-monitor repository
