@@ -5,7 +5,7 @@ According to the need, you can save the monitoring results to the excel table, o
 ## Usage
 1. clone linux-performance-monitor repository
    ```shell
-   git clone http
+   git clone https://github.com/leeyoshinari/Small_Tool.git
    
    cd Small_Tool/linux-performance-monitor
    ```
