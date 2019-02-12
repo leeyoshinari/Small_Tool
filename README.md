@@ -8,4 +8,4 @@ Some small scripts using python.
 
 3. [timeoutLimit]() is used to avoid function run timeout.
 
-4. [element]() is used to determine whether page's elements exist.
+4. [element](https://github.com/leeyoshinari/Small_Tool/tree/master/element) is used to determine whether page's elements exist.
