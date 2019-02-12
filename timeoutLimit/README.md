@@ -1,9 +1,9 @@
 # timeoutLimit
-It's used to avoid function run timeout.
+It's used to avoid function run stuck.
 
-When a function runs for a long time, or running is stuck but no error, you need to determine whether the function runs timeout. If timeout, jumping out of the function and some message should be returned.
+When a function runs for a long time, or running is stuck but no error, you need to determine whether the function runs timeout. If timeout, jumping out of the function and some messages should be returned.
 
-With the Python decorator, it's possible to introduce a timing function without affecting the original function.
+With the Python decorator, it's possible to use a timing function without affecting the original function.
 
 ## Usage
 1. clone timeoutLimit repository
