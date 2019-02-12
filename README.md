@@ -6,6 +6,6 @@ Some small scripts using python.
 
 2. [pyjson](https://github.com/leeyoshinari/Small_Tool/tree/master/pyjson) is used to compare the similarity of two json files.
 
-3. [timeoutLimit]() is used to avoid function run timeout.
+3. [timeoutLimit](https://github.com/leeyoshinari/Small_Tool/tree/master/timeoutLimit) is used to avoid function run timeout.
 
 4. [element](https://github.com/leeyoshinari/Small_Tool/tree/master/element) is used to determine whether page's elements exist.
