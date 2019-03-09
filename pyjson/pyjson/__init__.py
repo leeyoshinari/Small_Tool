@@ -6,42 +6,46 @@
 
 from pyjson.pyjson import Compare
 
-__all__ = ["compare", "parser_dict", "parser_list", "is_equal"]
+__all__ = ["compare", "compare_dict", "compare_list", "is_equal", "flag"]
 
 C = Compare()
 
-def compare(new_file, raw_file, encoding='utf-8'):
+
+def compare(file1, file2, encoding='utf-8'):
     """
     To determine whether two files are the same.
 
     param:
-        new_file: a new file;
-        raw_file: a raw file;
+        file1: compared file, the format is '.txt';
+        file2: comparing file, the format is '.txt';
         encoding: coding format, default: utf-8.
     """
-    C.compare(new_file, raw_file, encoding=encoding)
+    C.compare(file1, file2, encoding=encoding)
 
-def parser_dict(new_dict, raw_dict):
+
+def compare_dict(dict1, dict2):
     """
     To deal the 'dict' type.
 
     param:
-        new_dict: the dict of the new file;
-        raw_dict: the dict of the raw file.
+        dict1: compared dict, it's a dict;
+        dict2: comparing dict, it's a dict.
     """
-    C.parser_dict(new_dict, raw_dict)
+    C.parser_dict(dict1, dict2)
 
-def parser_list(new_list, raw_list):
+
+def compare_list(list1, list2):
     """
     To deal the 'list' type.
 
     param:
-        new_dict: the dict of the new file;
-        raw_dict: the dict of the raw file.
+        list1: compared list, it's a list;
+        list2: comparing list, it's a list.
     """
-    C.parser_list(new_list, raw_list)
+    C.parser_list(list1, list2)
 
-def is_equal(value1, value2, field):
+
+def is_equal(value1, value2):
     """
     To determine whether the two values are equal.
     Currently, all types of values in the json are int, float, str, dict, list, and null.
@@ -49,8 +53,14 @@ def is_equal(value1, value2, field):
     the support for the corresponding type.
 
     param:
-        value1: the value of the new file;
-        value2: the value of the raw file;
-        field: the key in new file.
+        value1: the compared value;
+        value2: the comparing value.
     """
-    C.is_equal(value1, value2, field)
+    C.is_equal(value1, value2)
+
+def flag():
+    """
+    A flag that whether of two files or two values are same.
+    If same, return 1, or return 0.
+    """
+    return C.flag

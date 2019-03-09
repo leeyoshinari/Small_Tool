@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyjson",
-    version="1.1.1",
+    version="1.2.0",
     author="leeyoshinari",
     author_email="leeyoshinari@outlook.com",
     keywords=("pip", "pyjson", "logging"),

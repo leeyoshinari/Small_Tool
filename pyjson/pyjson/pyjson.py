@@ -4,7 +4,7 @@
 # Compare two similar json files.
 # If some fields are missing or the value of a field is different, an error message will be displayed.
 #
-# Version: 1.1.1
+# Version: 1.2.0
 # Copyright 2018-2020 by leeyoshinari. All Rights Reserved.
 
 import json
@@ -17,20 +17,21 @@ logging.basicConfig(level=logging.INFO,
 class Compare:
     def __init__(self):
         self.flag = 1  # a flag, used to determine whether two files are same.
+        self.field = ['']   # a list, store the fields that traverse the dict.
         self.new_file = None
         self.raw_file = None
 
-    def compare(self, new_file, raw_file, encoding):
+    def compare(self, file1, file2, encoding):
         """
         To determine whether two files are the same.
         param:
-            new_file: a new file;
-            raw_file: a raw file;
+            file1: a new file;
+            file2: a raw file;
             encoding: coding format, default: utf-8.
         """
         self.flag = 1  # initialize
-        self.new_file = new_file  # new
-        self.raw_file = raw_file  # raw
+        self.new_file = file1  # new
+        self.raw_file = file2  # raw
         new_json = json.load(open(self.new_file, 'r', encoding=encoding))  # read json file
         raw_json = json.load(open(self.raw_file, 'r', encoding=encoding))
 
@@ -50,39 +51,39 @@ class Compare:
         if self.flag:
             logging.info('There are the same between "{}" and "{}".'.format(self.new_file, self.raw_file))
 
-    def parser_dict(self, new_dict, raw_dict):
+    def parser_dict(self, dict1, dict2):
         """
         To deal the 'dict' type.
-        param:
-            new_dict: the dict of the new file;
-            raw_dict: the dict of the raw file.
         """
-        for key, value in new_dict.items():
-            if key in raw_dict.keys():
+        for key, value in dict1.items():
+            if key in dict2.keys():
+                self.field.append(key)
                 if isinstance(value, dict):  # dict type
-                    self.parser_dict(value, raw_dict[key])
+                    self.parser_dict(value, dict2[key])
 
                 elif isinstance(value, list):  # list type
-                    self.parser_list(value, raw_dict[key])
+                    self.parser_list(value, dict2[key])
 
                 else:
-                    self.is_equal(value, raw_dict[key], key)
+                    self.is_equal(value, dict2[key])
 
             else:
                 self.flag = 0
-                logging.error('The key "{}" is not in raw file "{}"'.format(key, self.raw_file))
+                if self.new_file or self.raw_file:
+                    logging.error('The key "{}" is not in raw file "{}"'.format(key, self.raw_file))
+                else:
+                    logging.error('The key "{}" is not in the second file.'.format(key))
 
-    def parser_list(self, new_list, raw_list):
+        self.field.pop()
+
+    def parser_list(self, list1, list2):
         """
         To deal the 'list' type.
-        param:
-            new_dict: the dict of the new file;
-            raw_dict: the dict of the raw file.
         """
-        for n in range(len(new_list)):
-            if isinstance(new_list[n], dict):  # dict type
+        for n in range(len(list1)):
+            if isinstance(list1[n], dict):  # dict type
                 try:
-                    self.parser_dict(new_list[n], raw_list[n])
+                    self.parser_dict(list1[n], list2[n])
                 except IndexError:
                     self.flag = 0
                     logging.error('IndexError: list index out of range.')
@@ -90,7 +91,7 @@ class Compare:
                 self.flag = 0
                 logging.error('Exist illegal field. There is no dict in list.')
 
-    def is_equal(self, value1, value2, field):
+    def is_equal(self, value1, value2):
         """
         To determine whether the two values are equal.
            Currently, all types of values in the json are int, float, str, dict, list, and null.
@@ -106,5 +107,24 @@ class Compare:
         """
         if str(value1) != str(value2):
             self.flag = 0
-            logging.error('"{}" is not equal to "{}" in "{}", new file name is "{}", raw file name '
-                          'is "{}"'.format(value1, value2, field, self.new_file, self.raw_file))
+            if self.new_file or self.raw_file:
+                logging.error('"{}" is not equal to "{}" in "{}", new file name is "{}", raw file name '
+                              'is "{}"'.format(value1, value2, self.log_str(), self.new_file, self.raw_file))
+            else:
+                logging.error('"{}" is not equal to "{}" in "{}".'.format(value1, value2, self.log_str()))
+
+        self.field.pop()
+
+    def log_str(self):
+        """
+        Splice the fields, used for finding the error field in dict.
+        """
+        res = ''
+        if len(self.field) > 1:
+            last = self.field[-1]
+            for r in self.field[1:-1]:
+                res += r + '->'
+
+            return res + last
+        else:
+            return ''
