@@ -9,13 +9,13 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyjson",
-    version="1.2.0",
+    version="1.3.0",
     author="leeyoshinari",
     author_email="leeyoshinari@outlook.com",
     keywords=("pip", "pyjson", "logging"),
     description="Compare the similarities between two JSONs.",
     long_description="",
-    url="https://github.com/leeyoshinari/jsontool",
+    url="https://github.com/leeyoshinari/Small_Tool/tree/master/pyjson",
     packages=find_packages(),
     install_requires=[],
     classifiers=(

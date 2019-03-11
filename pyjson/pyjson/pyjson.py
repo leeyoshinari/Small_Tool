@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-# Compare two similar json files.
-# If some fields are missing or the value of a field is different, an error message will be displayed.
-#
-# Version: 1.2.0
-# Copyright 2018-2020 by leeyoshinari. All Rights Reserved.
+"""
+Compare two similar json files.
+If some fields are missing or the value of a field is different, an error message will be displayed.
+
+Version: 1.3.0
+Github: https://github.com/leeyoshinari/Small_Tool/tree/master/pyjson
+Copyright 2018-2020 by leeyoshinari. All Rights Reserved.
+"""
 
 import json
 import logging
@@ -51,7 +53,7 @@ class Compare:
         if self.flag:
             logging.info('There are the same between "{}" and "{}".'.format(self.new_file, self.raw_file))
 
-    def parser_dict(self, dict1, dict2):
+    def parser_dict(self, dict1, dict2, is_pop=True):
         """
         To deal the 'dict' type.
         """
@@ -74,22 +76,33 @@ class Compare:
                 else:
                     logging.error('The key "{}" is not in the second file.'.format(key))
 
-        self.field.pop()
+        if is_pop:
+            self.field.pop()
 
     def parser_list(self, list1, list2):
         """
         To deal the 'list' type.
         """
-        for n in range(len(list1)):
-            if isinstance(list1[n], dict):  # dict type
-                try:
-                    self.parser_dict(list1[n], list2[n])
-                except IndexError:
+        if list2:
+            is_pop = True
+            if len(list1) > 1:
+                is_pop = False
+
+            for n in range(len(list1)):
+                if isinstance(list1[n], dict):  # dict type
+                    try:
+                        self.parser_dict(list1[n], list2[n], is_pop=is_pop)
+                    except Exception as e:
+                        self.flag = 0
+                        logging.error(e)
+                else:
                     self.flag = 0
-                    logging.error('IndexError: list index out of range.')
-            else:
-                self.flag = 0
-                logging.error('Exist illegal field. There is no dict in list.')
+                    logging.error('Exist illegal field. There is no dict in list.')
+
+        else:
+            self.flag = 0
+            self.is_equal(list1, list2)
+
 
     def is_equal(self, value1, value2):
         """
