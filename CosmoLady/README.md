@@ -1,7 +1,7 @@
 # CosmoLady
 This is used to crawl comments of JD. crawling the CosmoLady JD Self-operated Store.
 
-## OVerview
+## Overview
 1. All bras' colors are as follow.<br>
    ![](https://github.com/leeyoshinari/Small_Tool/blob/master/CosmoLady/res/original%20color.png)
 
