@@ -12,4 +12,4 @@ Some small scripts using python.
 
 5. [crawl-ip](https://github.com/leeyoshinari/Small_Tool/tree/master/crawl-ip) is used to crawl free high-hiding IP using for IP Agent.
 
-6.[CosmoLady](https://github.com/leeyoshinari/Small_Tool/tree/master/CosmoLady) is used to crawl the comments of JD.
+6. [CosmoLady](https://github.com/leeyoshinari/Small_Tool/tree/master/CosmoLady) is used to crawl the comments of JD.
