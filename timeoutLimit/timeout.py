@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # @File   : timeout.py
 # @Author : leeyoshinari
-# @Time   : 2019/2/12 10:24
 
 import threading
 
