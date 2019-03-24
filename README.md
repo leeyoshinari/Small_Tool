@@ -10,6 +10,8 @@ Some small scripts using python.
 
 4. [element](https://github.com/leeyoshinari/Small_Tool/tree/master/element) is used to determine whether page's elements exist.
 
-5. [crawl-ip](https://github.com/leeyoshinari/Small_Tool/tree/master/crawl-ip) is used to crawl free high-hiding IP using for IP Agent.
+5. [crawl-ip](https://github.com/leeyoshinari/Small_Tool/tree/master/crawl-ip) is a sample that crawl free high-hiding IP using for IP Agent.
 
-6. [CosmoLady](https://github.com/leeyoshinari/Small_Tool/tree/master/CosmoLady) is used to crawl the comments of JD.
+6. [CosmoLady](https://github.com/leeyoshinari/Small_Tool/tree/master/CosmoLady) is a sample that crawl the comments of JD.
+
+Finally, click [wiki]() for information.
