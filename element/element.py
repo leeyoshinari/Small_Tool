@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # @File   : element.py
 # @Author : leeyoshinari
-# @Time   : 2019/2/12 10:24
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
