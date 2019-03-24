@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # @File   : Ip_crawler.py
 # @Author : leeyoshinari
-# @Time   : 2019/3/2 13:13
 
 import re
 import random
