@@ -5,7 +5,6 @@
 # 跟据需要，可将监控结果保存到excel表格中，或MySQL数据库中
 
 # @Author : leeyoshinari
-# @Time   : 2019/01/06 10:24
 
 import paramiko
 import pymysql
