@@ -21,7 +21,7 @@ class PerMon(object):
 
         self.counter = 0    # 执行linux命令失败计数，默认5次
         self.linux_flag = False 	# 程序执行过程中是否连接linux标志
-        self.linux_link_counter = 0		# 程序执行过程中重复连接linux计数，默认5次
+        self.linux_link_counter = 0		# 程序执行过程中重复连接linux计数，默认3次
         self.pid = PID
         self.client = None
         self.ssh = None
@@ -29,7 +29,7 @@ class PerMon(object):
         self.cursor = None
         self.is_mysql = is_mysql
         self.is_save = is_save
-        self.total_time = total_time + 200
+        self.total_time = total_time + 300
         self.interval = interval
 
         self.x_label = []
@@ -84,7 +84,7 @@ class PerMon(object):
                     self.linux_link_counter += 1    # linux连接次数
                     self.linux_flag = False  # 重置是否连接linux标志
 
-                if self.linux_link_counter == 5:    # 如果连续5次连接linux，仍然执行命令失败，则跳出循环
+                if self.linux_link_counter == 3:    # 如果连续3次连接linux，仍然执行命令失败，则跳出循环
                     break
 
                 get_data_time = time.time()
@@ -92,15 +92,15 @@ class PerMon(object):
                     self.ssh = self.client.get_transport().open_session()
                     if self.ssh.active:
                         self.ssh.exec_command('top -n 1 -b |grep -P {} |tr -s " "'.format(self.pid))
-                        res = self.ssh.recv(1024).decode().strip().split(' ')
+                        res = self.ssh.recv(1024).decode().split('java')[0].strip().split(' ')
                     else:
                         continue
 
                     if res:
-                        if res[0] == str(self.pid):
+                        try:
                             search_time = time.strftime('%Y-%m-%d %H:%M:%S')
-                            cpu = float(res[7])
-                            mem = float(res[8])
+                            cpu = float(res[-3])
+                            mem = float(res[-2])
                             if self.is_save:
                                 self.x_label.append(search_time)
                                 self.cpu.append(cpu)
@@ -113,8 +113,8 @@ class PerMon(object):
                             self.counter = 0
                             self.linux_flag = False
                             self.linux_link_counter = 0
-                        else:
-                            print('The PID {} is not exist.'.format(self.pid))
+                        except Exception as e:
+                            print('The PID {} is not exist. Error maybe {}.'.format(self.pid, e))
                             self.counter += 1
                             continue
 
