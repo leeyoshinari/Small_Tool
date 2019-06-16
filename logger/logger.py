@@ -7,7 +7,7 @@ import datetime
 import logging.handlers
 
 
-class Logger(object):
+class logger(object):
 	LEVEL = 'INFO'
 	log_path = 'logs'
 
