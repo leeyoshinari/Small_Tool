@@ -11,7 +11,7 @@ It's used to output logs.
 
 2. Example
    ```shell
-   from xxx/logger.Logger import logger
+   from xxx.logger import logger
    
-   logger.info('hello world')
+   logger.logger.info('hello world')
    ```
