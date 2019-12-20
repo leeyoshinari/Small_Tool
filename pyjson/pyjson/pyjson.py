@@ -103,7 +103,6 @@ class Compare:
             self.flag = 0
             self.is_equal(list1, list2)
 
-
     def is_equal(self, value1, value2):
         """
         To determine whether the two values are equal.
