@@ -25,9 +25,6 @@ With the Python decorator, it's possible to use a timing function without affect
 	
    print(sleep())
    ```
-   ```shell
-   The output: None
-   ```
 
 ## Others
-   If a function runs timeout, it returns `None`, else, it returns the result of the function.
+   If a function runs timeout, it raises `Exception`, else, it returns the result of the function.

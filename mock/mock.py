@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # Author: leeyoshinari
 
-import json
 import asyncio
 from aiohttp import web
 
@@ -16,16 +15,16 @@ async def login(request):
 	# 	f.write(json.dumps(data))
 
 	# return response data
-	return web.Response(body=json.dumps({'code': 0, 'message': '登陆成功', 'data': 0}, ensure_ascii=False))
+	return web.json_response({'code': 0, 'message': '登陆成功', 'data': 0})
 
 
 async def logout(request):
 	name = request.match_info['name']   # get value by key
-	return web.Response(body=json.dumps({'code': 0, 'message': f'{name}退出成功', 'data': 0}, ensure_ascii=False))
+	return web.json_response({'code': 0, 'message': f'{name}退出成功', 'data': 0})
 
 
-async def mock(event_loop):
-	app = web.Application(loop=event_loop)
+async def mock():
+	app = web.Application()
 
 	# add route
 	app.router.add_route('POST', '/login', login)
@@ -38,5 +37,4 @@ async def mock(event_loop):
 
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(mock(loop))
 loop.run_forever()

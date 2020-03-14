@@ -4,6 +4,7 @@
 # @Author : leeyoshinari
 
 import threading
+import traceback
 
 
 class TimeOutException(Exception):
@@ -18,24 +19,28 @@ def timeoutlimit(timeout):
 					super(Timeoutlimit, self).__init__()
 					self.result = None
 					self.error = None
-					
+
 				def run(self):
 					try:
 						self.result = functions(*args, **kwargs)
-					except TimeOutException as e:
-						self.error = e
-				
+					except:
+						self.error = traceback.format_exc()
+
 			t = Timeoutlimit()
 			t.setDaemon(True)
 			t.start()
 			t.join(timeout)
-			
-			if t.error is not None:
-				print('timeout:', t.error)
-				
+
+			if t.isAlive():
+				raise TimeOutException('Function "{}" Running TimeOut.'.format(functions.__name__))
+
+			if t.error:
+				raise Exception(t.error)
+
 			return t.result
-			
+
 		return decorator1
+
 	return decorator
 
 
@@ -43,7 +48,6 @@ if __name__ == '__main__':
 	@timeoutlimit(1)
 	def sleep():
 		import time
-		time.sleep(3)
+		time.sleep(2)
 		return True
-	
 	print(sleep())
