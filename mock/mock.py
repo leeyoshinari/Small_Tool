@@ -37,4 +37,5 @@ async def mock():
 
 
 loop = asyncio.get_event_loop()
+loop.run_until_complete(mock())
 loop.run_forever()
