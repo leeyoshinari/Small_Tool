@@ -31,7 +31,7 @@ def timeoutlimit(timeout):
 			t.start()
 			t.join(timeout)
 
-			if t.isAlive():
+			if t.is_alive():
 				raise TimeOutException('Function "{}" Running TimeOut.'.format(functions.__name__))
 
 			if t.error:
