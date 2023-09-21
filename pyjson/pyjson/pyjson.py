@@ -4,9 +4,9 @@
 Compare two similar json files.
 If some fields are missing or the value of a field is different, an error message will be displayed.
 
-Version: 1.4.0
+Version: 1.4.1
 Github: https://github.com/leeyoshinari/Small_Tool/tree/master/pyjson
-Copyright 2018-2020 by leeyoshinari. All Rights Reserved.
+Copyright 2023-2025 by leeyoshinari. All Rights Reserved.
 """
 
 import json
@@ -64,7 +64,7 @@ class Compare:
                         self.is_equal(value, dict2[key])
                 else:
                     self.flag = 0
-                    logging.error('The key "{}" is not in the second. KEY in {}'.format(key, self.log_str()))
+                    logging.error('The key "{}" is not in the second. KEY in "{}".'.format(key, self.log_str()))
                 if self.field: self.field.pop()
         else:
             self.is_equal(dict1, dict2)
@@ -74,18 +74,22 @@ class Compare:
         """
         To deal the 'list' type.
         """
-        if list1 and list2:
-            for n in range(len(list1)):
-                self.field.append('[{}]'.format(n))
-                if isinstance(list1[n], dict):
-                    self.parser_dict(list1[n], list2[n])
-                else:
+        if len(list1) == len(list2):
+            if list1 and list2:
+                for n in range(len(list1)):
+                    self.field.append('[{}]'.format(n))
+                    if isinstance(list1[n], dict):
+                        self.parser_dict(list1[n], list2[n])
+                    else:
+                        if self.field: self.field.pop()
+                        self.is_equal(list1, list2)
+                        break
                     if self.field: self.field.pop()
-                    self.is_equal(list1, list2)
-                    break
-                if self.field: self.field.pop()
+            else:
+                self.is_equal(list1, list2)
         else:
-            self.is_equal(list1, list2)
+            self.flag = 0
+            logging.error('The length of list is different, KEY in "{}".'.format(self.log_str()))
 
     def is_equal(self, value1, value2):
         """

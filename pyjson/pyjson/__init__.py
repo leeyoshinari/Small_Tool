@@ -4,9 +4,9 @@
 Compare two similar json files.
 If some fields are missing or the value of a field is different, an error message will be displayed.
 
-Version: 1.4.0
+Version: 1.4.1
 Github: https://github.com/leeyoshinari/Small_Tool/tree/master/pyjson
-Copyright 2018-2020 by leeyoshinari. All Rights Reserved.
+Copyright 2023-2025 by leeyoshinari. All Rights Reserved.
 """
 
 from pyjson.pyjson import Compare

@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyjson",
-    version="1.4.0",
+    version="1.4.1",
     author="leeyoshinari",
     author_email="leeyoshinari@outlook.com",
     keywords=("pip", "pyjson", "logging"),
