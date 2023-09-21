@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-
 # File Name: setup.py
 # Author: leeyoshinari
 
@@ -9,7 +8,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyjson",
-    version="1.3.0",
+    version="1.4.0",
     author="leeyoshinari",
     author_email="leeyoshinari@outlook.com",
     keywords=("pip", "pyjson", "logging"),
@@ -24,8 +23,8 @@ setup(
             "Operating System :: OS Independent",
             "Programming Language :: Python",
             "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.5",
-            "Programming Language :: Python :: 3.6",
-            "Programming Language :: Python :: 3.7"
+            "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: 3.9",
+            "Programming Language :: Python :: 3.10"
         ),
 )
