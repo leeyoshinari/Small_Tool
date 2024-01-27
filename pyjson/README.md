@@ -3,16 +3,7 @@ Compare two similar json files.
 If some fields are missing or the value of a field is different, an error message will be displayed.
 
 ## Usage
-1. Clone Small_Tool repository
-	```Shell
-	git clone https://github.com/leeyoshinari/Small_Tool.git
-  
-    cd Small_Tool/pyjson
-    
-    python setup.py install
-	```
-  
-    or you can install it using `pip`
+1. install package using `pip`
     ```shell
     pip install pyjson
     ```

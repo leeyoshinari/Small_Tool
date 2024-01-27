@@ -4,9 +4,9 @@
 Compare two similar json files.
 If some fields are missing or the value of a field is different, an error message will be displayed.
 
-Version: 1.4.1
+Version: 1.4.2
 Github: https://github.com/leeyoshinari/Small_Tool/tree/master/pyjson
-Copyright 2023-2025 by leeyoshinari. All Rights Reserved.
+Copyright by leeyoshinari. All Rights Reserved.
 """
 
 from pyjson.pyjson import Compare
@@ -16,19 +16,22 @@ __all__ = ["compare", "compare_dict", "compare_list", "is_equal", "flag", "sort"
 C = Compare()
 
 
-def compare(file1, file2, encoding='utf-8'):
+def compare(file1, file2, exact_equal=False, encoding='utf-8'):
     """
     To determine whether two files are the same.
 
     param:
         file1: compared file, the format is '.txt' or '.json';
         file2: comparing file, the format is '.txt' or '.json';
+        exact_equal: for example:
+            If exact_equal = True, 2 is equal to 2.0, but '2' is not equal to 2
+            If exact_equal = False, 2 is not equal to 2.0, but '2' is equal to 2
         encoding: coding format, default: utf-8.
     """
-    C.compare(file1, file2, encoding=encoding)
+    C.compare(file1, file2, exact_equal=exact_equal, encoding=encoding)
 
 
-def compare_dict(dict1, dict2):
+def compare_dict(dict1, dict2, exact_equal=False):
     """
     To deal the 'dict' type.
 
@@ -40,21 +43,21 @@ def compare_dict(dict1, dict2):
         When a list is in dict, if the length of list is 1, is_pop is True, otherwise, is_pop is False.
         If the length of list is larger than 1, and is_pop is True, the key and value are mismatch.
     """
-    C.parser_dict(dict1, dict2)
+    C.parser_dict(dict1, dict2, exact_equal=exact_equal)
 
 
-def compare_list(list1, list2):
+def compare_list(list1, list2, exact_equal=False):
     """
     To deal the 'list' type.
     """
-    C.parser_list(list1, list2)
+    C.parser_list(list1, list2, exact_equal=exact_equal)
 
 
-def is_equal(value1, value2):
+def is_equal(value1, value2, exact_equal=False):
     """
     To determine whether the two values are equal.
     """
-    C.is_equal(value1, value2)
+    C.is_equal(value1, value2, exact_equal=exact_equal)
 
 
 def flag():

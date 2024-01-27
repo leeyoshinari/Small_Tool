@@ -20,7 +20,7 @@ class Compare:
         self.flag = 1  # a flag, used to determine whether two files are same.
         self.field = ['']   # a list, store the fields that traverse the dict.
 
-    def compare(self, file1, file2, encoding):
+    def compare(self, file1, file2, exact_equal, encoding):
         """
         To determine whether two files are the same.
         param:
@@ -35,10 +35,10 @@ class Compare:
         # If new_json and raw_json are the 'dict' type or 'list' type, compare them,
         # otherwise throw an error.
         if isinstance(new_json, dict) and isinstance(raw_json, dict):
-            self.parser_dict(new_json, raw_json)
+            self.parser_dict(new_json, raw_json, exact_equal)
 
         elif isinstance(new_json, list) and isinstance(raw_json, list):
-            self.parser_list(new_json, raw_json)
+            self.parser_list(new_json, raw_json, exact_equal)
 
         else:
             self.flag = 0
@@ -48,7 +48,7 @@ class Compare:
         if self.flag:
             logging.info('There are the same between "{}" and "{}".'.format(file1, file2))
 
-    def parser_dict(self, dict1, dict2):
+    def parser_dict(self, dict1, dict2, exact_equal):
         """
         To deal the 'dict' type.
         """
@@ -57,20 +57,19 @@ class Compare:
                 self.field.append(key)
                 if key in dict2.keys():
                     if isinstance(value, dict):
-                        self.parser_dict(value, dict2[key])
+                        self.parser_dict(value, dict2[key], exact_equal)
                     elif isinstance(value, list):
-                        self.parser_list(value, dict2[key])
+                        self.parser_list(value, dict2[key], exact_equal)
                     else:
-                        self.is_equal(value, dict2[key])
+                        self.is_equal(value, dict2[key], exact_equal)
                 else:
                     self.flag = 0
                     logging.error('The key "{}" is not in the second. KEY in "{}".'.format(key, self.log_str()))
                 if self.field: self.field.pop()
         else:
-            self.is_equal(dict1, dict2)
+            self.is_equal(dict1, dict2, exact_equal)
 
-
-    def parser_list(self, list1, list2):
+    def parser_list(self, list1, list2, exact_equal):
         """
         To deal the 'list' type.
         """
@@ -79,25 +78,32 @@ class Compare:
                 for n in range(len(list1)):
                     self.field.append('[{}]'.format(n))
                     if isinstance(list1[n], dict):
-                        self.parser_dict(list1[n], list2[n])
+                        self.parser_dict(list1[n], list2[n], exact_equal)
                     else:
                         if self.field: self.field.pop()
-                        self.is_equal(list1, list2)
+                        self.is_equal(list1, list2, exact_equal)
                         break
                     if self.field: self.field.pop()
             else:
-                self.is_equal(list1, list2)
+                self.is_equal(list1, list2, exact_equal)
         else:
             self.flag = 0
             logging.error('The length of list is different, KEY in "{}".'.format(self.log_str()))
 
-    def is_equal(self, value1, value2):
+    def is_equal(self, value1, value2, exact_equal):
         """
         To determine whether the two values are equal.
+        If exact_equal = True, 2 is equal to 2.0, but '2' is not equal to 2
+        If exact_equal = False, 2 is not equal to 2.0, but '2' is equal to 2
         """
-        if str(value1) != str(value2):
-            self.flag = 0
-            logging.error('"{}" is not equal to "{}" in "{}".'.format(value1, value2, self.log_str()))
+        if exact_equal:
+            if value1 != value2:
+                self.flag = 0
+                logging.error('"{}" is not equal to "{}" in "{}".'.format(value1, value2, self.log_str()))
+        else:
+            if str(value1) != str(value2):
+                self.flag = 0
+                logging.error('"{}" is not equal to "{}" in "{}".'.format(value1, value2, self.log_str()))
 
     def log_str(self):
         """
