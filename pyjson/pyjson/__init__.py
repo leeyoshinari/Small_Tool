@@ -5,7 +5,7 @@
 Compare two similar json files.
 If some fields are missing or the value of a field is different, an error message will be displayed.
 
-Version: 1.4.3
+Version: 1.4.5
 Github: https://github.com/leeyoshinari/Small_Tool/tree/master/pyjson
 Releases: https://github.com/leeyoshinari/Small_Tool/releases
 Copyright by leeyoshinari. All Rights Reserved.
@@ -31,6 +31,7 @@ def compare(file1: str, file2: str, exact_equal: bool = False, exclude_fields: l
         exclude_fields: the keys that do not need to be compared; it is 'list'.
         encoding: coding format, default: utf-8.
     """
+    if exclude_fields is None: exclude_fields = list()
     C.compare(file1, file2, exact_equal=exact_equal, exclude_fields=exclude_fields, encoding=encoding)
 
 
@@ -41,13 +42,15 @@ def compare_dict(dict1: dict, dict2: dict, exact_equal: bool = False, exclude_fi
         dict1: compared dict, it's a dict;
         dict2: comparing dict, it's a dict;
     """
+    if exclude_fields is None: exclude_fields = list()
     C.parser_dict(dict1, dict2, exact_equal=exact_equal, exclude_fields=exclude_fields)
 
 
-def compare_list(list1:list, list2:list, exact_equal: bool = False, exclude_fields: list = None):
+def compare_list(list1: list, list2: list, exact_equal: bool = False, exclude_fields: list = None):
     """
     To deal the 'list' type.
     """
+    if exclude_fields is None: exclude_fields = list()
     C.parser_list(list1, list2, exact_equal=exact_equal, exclude_fields=exclude_fields)
 
 

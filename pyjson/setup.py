@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="pyjson",
-    version="1.4.3",
+    version="1.4.5",
     author="leeyoshinari",
     author_email="leeyoshinari@outlook.com",
     keywords=("pip", "pyjson", "logging"),
