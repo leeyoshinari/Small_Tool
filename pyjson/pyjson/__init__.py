@@ -5,7 +5,7 @@
 Compare two similar json files.
 If some fields are missing or the value of a field is different, an error message will be displayed.
 
-Version: 1.4.5
+Version: 1.4.6
 Github: https://github.com/leeyoshinari/Small_Tool/tree/master/pyjson
 Releases: https://github.com/leeyoshinari/Small_Tool/releases
 Copyright by leeyoshinari. All Rights Reserved.
@@ -13,18 +13,23 @@ Copyright by leeyoshinari. All Rights Reserved.
 
 from pyjson.pyjson import Compare
 
-__all__ = ["compare", "compare_dict", "compare_list", "is_equal", "flag", "sort"]
+__all__ = ["compare", "flag", "sort"]
 
 C = Compare()
 
 
-def compare(file1: str, file2: str, exact_equal: bool = False, exclude_fields: list = None, encoding='utf-8'):
+def compare(benchmark_file: any, compare_file: any, compare_type: str = 'file', exact_equal: bool = False,
+            exclude_fields: list = None, encoding: str = 'utf-8'):
     """
     To determine whether two files are the same.
 
     param:
-        file1: the path of compared file, the format is '.txt' or '.json';
-        file2: the path of comparing file, the format is '.txt' or '.json';
+        benchmark_file: the path of benchmark file, the format is '.txt' or '.json', dict, list;
+        compare_file: the path of compare file, the format is '.txt' or '.json', dict, list;
+        compare_type: file, dict or list;
+            If compare_type = 'file', benchmark_file and compare_file are a json file, the format is '.txt' or '.json'.
+            If compare_type = 'dict', benchmark_file and compare_file are a dict.
+            If compare_type = 'list', benchmark_file and compare_file are a list.
         exact_equal: for example:
             If exact_equal = True, 2 is equal to 2.0, but '2' is not equal to 2
             If exact_equal = False, 2 is not equal to 2.0, but '2' is equal to 2
@@ -32,33 +37,14 @@ def compare(file1: str, file2: str, exact_equal: bool = False, exclude_fields: l
         encoding: coding format, default: utf-8.
     """
     if exclude_fields is None: exclude_fields = list()
-    C.compare(file1, file2, exact_equal=exact_equal, exclude_fields=exclude_fields, encoding=encoding)
+    if compare_type == 'file':
+        C.parser_file(benchmark_file, compare_file, exact_equal=exact_equal, exclude_fields=exclude_fields, encoding=encoding)
 
+    if compare_type == 'dict':
+        C.parser_dict(benchmark_file, compare_file, exact_equal=exact_equal, exclude_fields=exclude_fields)
 
-def compare_dict(dict1: dict, dict2: dict, exact_equal: bool = False, exclude_fields: list = None):
-    """
-    To deal the 'dict' type.
-    param:
-        dict1: compared dict, it's a dict;
-        dict2: comparing dict, it's a dict;
-    """
-    if exclude_fields is None: exclude_fields = list()
-    C.parser_dict(dict1, dict2, exact_equal=exact_equal, exclude_fields=exclude_fields)
-
-
-def compare_list(list1: list, list2: list, exact_equal: bool = False, exclude_fields: list = None):
-    """
-    To deal the 'list' type.
-    """
-    if exclude_fields is None: exclude_fields = list()
-    C.parser_list(list1, list2, exact_equal=exact_equal, exclude_fields=exclude_fields)
-
-
-def is_equal(value1, value2, exact_equal=False):
-    """
-    To determine whether the two values are equal.
-    """
-    C.is_equal(value1, value2, exact_equal=exact_equal)
+    if compare_type == 'list':
+        C.parser_list(benchmark_file, compare_file, exact_equal=exact_equal, exclude_fields=exclude_fields)
 
 
 def flag():
@@ -69,11 +55,11 @@ def flag():
     return C.flag
 
 
-def sort(dict1: dict, reverse: bool = False, response: str = 'dict'):
+def sort(sort_dict: dict, reverse: bool = False, response: str = 'dict'):
     """
     Recursively iterate and sort the keys in the dict.
     param:
         response='dict' is mean to return-value is 'dict' type, it is default.
             or response='json' is mean to return-value is a json string.
     """
-    return C.sort(dict1, reverse, response)
+    return C.sort(sort_dict, reverse, response)
